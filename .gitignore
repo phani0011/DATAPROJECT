@@ -1,0 +1,12 @@
+# Data lake (never push data)
+data/lake/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+
+# Logs
+*.log

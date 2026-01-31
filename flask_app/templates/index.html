@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Share Your Best Movie</h2>
+
+<form action="/submit" method="post">
+
+    <label>Your Name:</label><br>
+    <input name="name" required><br><br>
+
+    <label>Movie Name:</label><br>
+    <input name="movie" required><br><br>
+
+    <label>Genre:</label><br>
+    <select name="genre" required>
+        <option>Action</option>
+        <option>Comedy</option>
+        <option>Drama</option>
+        <option>Thriller</option>
+        <option>Sci-Fi</option>
+        <option>Romance</option>
+        <option>Horror</option>
+    </select><br><br>
+
+    <label>Streaming Platform:</label><br>
+    <select name="platform" required>
+        <option>Netflix</option>
+        <option>Amazon Prime</option>
+        <option>Disney+ Hotstar</option>
+        <option>Hulu</option>
+        <option>Apple TV</option>
+        <option>YouTube</option>
+    </select><br><br>
+
+    <label>Rating (1 to 5):</label><br>
+    <input name="rating" type="number" min="1" max="5" required><br><br>
+
+    <label>Short Review:</label><br>
+    <textarea name="review"></textarea><br><br>
+
+    <button type="submit">Submit Recommendation</button>
+</form>
+
+{% endblock %}
+
+
+

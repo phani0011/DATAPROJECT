@@ -1,0 +1,40 @@
+from flask import Flask, request, render_template_string
+import json
+from datetime import datetime
+
+app = Flask(__name__)
+
+HTML_FORM = """
+<h2>User Activity Form</h2>
+<form action="/submit" method="post">
+  Name: <input name="name"><br><br>
+  Product: <input name="product"><br><br>
+  Price: <input name="price"><br><br>
+  Rating: <input name="rating"><br><br>
+  <button type="submit">Submit</button>
+</form>
+"""
+
+@app.route("/")
+def home():
+    return render_template_string(HTML_FORM)
+
+@app.route("/submit", methods=["POST"])
+def submit():
+    data = {
+        "name": request.form["name"],
+        "product": request.form["product"],
+        "price": float(request.form["price"]),
+        "rating": int(request.form["rating"]),
+        "timestamp": str(datetime.now())
+    }
+
+    # Write to bronze layer (raw data)
+    with open("/data/lake/bronze/events.json", "a") as f:
+        f.write(json.dumps(data) + "\n")
+
+    return "Data submitted successfully!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5002)
+

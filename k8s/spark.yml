@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: spark
+        image: spark-app
+      restartPolicy: Never
+
