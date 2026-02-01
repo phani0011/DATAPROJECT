@@ -1,26 +1,56 @@
-import json
-import os
+# flask_app/services/ingestion_services.py
 
-DATA_PATH = "data/lake/bronze"
-os.makedirs(DATA_PATH, exist_ok=True)
+import json
+from minio import Minio
+from io import BytesIO
+from datetime import datetime
+
+client = Minio(
+    "minio:9000",
+    access_key="minioadmin",
+    secret_key="minioadmin",
+    secure=False
+)
+
+BUCKET = "lake"
+BRONZE_PATH = "bronze/events.json"
+
 
 def save_event(data):
-    event = {
-        "user": data["user"],
-        "movie": data["movie"],
-        "genre": data["genre"],
-        "platform": data["platform"],
-        "rating": data["rating"],
-        "review": data["review"],
-        "timestamp": data["timestamp"]
-    }
+    try:
+        # Add timestamp
+        data["timestamp"] = str(datetime.now())
 
-    file_path = os.path.join(DATA_PATH, "events.json")
+        # Get existing file (if exists)
+        try:
+            obj = client.get_object(BUCKET, BRONZE_PATH)
+            existing = obj.read().decode()
+            events = existing.strip().split("\n")
+        except:
+            events = []
 
-    with open(file_path, "a") as f:
-        f.write(json.dumps(event) + "\n")
+        events.append(json.dumps(data))
 
-    return {"status": "success"}
+        final_data = "\n".join(events)
+
+        client.put_object(
+            BUCKET,
+            BRONZE_PATH,
+            BytesIO(final_data.encode()),
+            length=len(final_data),
+            content_type="application/json"
+        )
+
+        return {"status": "success", "written_to": BRONZE_PATH}
+
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+
+
+
+
 
 
 

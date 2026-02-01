@@ -23,10 +23,14 @@ def submit():
             "timestamp": str(datetime.now())
         }
 
-        save_event(data)
+        logging.info(f"Received data: {data}")
+        result = save_event(data)
+        logging.info(f"Saved to MinIO: {result}")
+
         return render_template("thankyou.html")
 
     except Exception as e:
+        logging.error(str(e))
         return f"Error occurred: {str(e)}"
 
 @app.route("/health")
@@ -35,4 +39,6 @@ def health():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5003, debug=True)
+
+
 
