@@ -1,4 +1,5 @@
-<img width="1248" height="832" alt="Gemini_Generated_Image_ac71cgac71cgac71" src="https://github.com/user-attachments/assets/7380995c-c672-48a4-9c6b-bfd35bf998bd" />
+<img width="1536" height="1024" alt="ChatGPT Image Feb 2, 2026 at 12_11_47 AM" src="https://github.com/user-attachments/assets/a8938484-178e-4c3e-846c-636ee177edb5" />
+
 
 # 🌐 DataProject – Distributed Data Platform with Flask, Dockers, Kubernetes & Spark
 
@@ -133,6 +134,7 @@ Gold (Insights)
 
 DataProject is a system-level project, not just a coding exercise.  
 It demonstrates how real data platforms are designed, deployed, and operated using modern cloud-native technologies.
+
 
 
 
